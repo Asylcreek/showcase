@@ -1,0 +1,655 @@
+<!doctype html>
+<html>
+  <head>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Langar&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="icon" href="/images/favicon.png" type="image/png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Google tag (gtag.js) -->
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-Q41JSPM8K3"
+    ></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+      gtag("config", "G-Q41JSPM8K3");
+    </script>
+  </head>
+
+  <body>
+    <style>
+      @font-face {
+        font-family: "Galano Grotesque";
+        src: url("/fonts/GalanoGrotesqueSemiBold.woff") format("woff");
+        font-weight: 600;
+        font-display: swap;
+      }
+
+      @font-face {
+        font-family: "Galano Grotesque";
+        src: url("/fonts/GalanoGrotesqueRegular.woff") format("woff");
+        font-weight: 400;
+        font-display: swap;
+      }
+
+      *,
+      *::after,
+      *::before {
+        margin: 0;
+        padding: 0;
+        box-sizing: inherit;
+      }
+
+      html {
+        font-size: 62.5%;
+        scroll-behavior: smooth;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Galano Grotesque", sans-serif;
+        font-size: 1.5rem;
+        font-weight: 400;
+        position: relative;
+      }
+
+      a {
+        text-decoration: none;
+        color: currentColor;
+      }
+
+      img {
+        max-width: 100%;
+        height: auto;
+        vertical-align: middle;
+        font-style: italic;
+        background-repeat: no-repeat;
+        background-size: cover;
+        shape-margin: 1.92rem;
+        pointer-events: none;
+      }
+
+      header {
+        padding: 2.4rem;
+        width: 100%;
+        z-index: 99999999;
+        position: relative;
+        height: 6.4rem;
+        background-color: #ffe5e5;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      header img {
+        width: 13.9rem;
+        height: 3.2rem;
+      }
+
+      @keyframes fadeout {
+        from {
+          opacity: 1;
+          visibility: visible;
+        }
+
+        to {
+          opacity: 0;
+          visibility: hidden;
+        }
+      }
+
+      .instruction {
+        position: absolute;
+        top: 10.5rem;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 9999999999999;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 1.6rem;
+        color: #fff;
+        pointer-events: none;
+        animation: fadeout 2s ease-in-out 1.5s forwards;
+      }
+
+      .offerings-group {
+        position: relative;
+        width: 100vw;
+        height: calc(100vh - 6.4rem);
+        display: flex;
+        align-items: flex-start;
+        flex-direction: column;
+        z-index: 9999999;
+      }
+
+      .offering {
+        position: relative;
+        height: calc(100% / 3);
+        width: 100%;
+        flex-shrink: 1;
+        overflow: hidden;
+        transition: height 0.3s ease-in-out;
+      }
+
+      .offering > div:first-child {
+        height: 100%;
+        position: relative;
+        cursor: pointer;
+      }
+
+      .offering > div:first-child > div {
+        position: relative;
+        height: 100%;
+      }
+
+      .offering > div:first-child > div::before {
+        content: "";
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+        background-color: rgba(0, 0, 0, 0.4);
+        z-index: 1;
+      }
+
+      .offering > div:first-child > div img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      .offering > div:first-child > p {
+        position: absolute;
+        bottom: 2.4rem;
+        z-index: 2;
+        color: #fff;
+        font-family: "Langar", "sans-serif";
+        font-size: 2.4rem;
+        text-transform: capitalize;
+        width: 100%;
+        text-align: center;
+      }
+
+      .offering:nth-of-type(1) img {
+        object-position: 48% center;
+      }
+
+      .offering:nth-of-type(2) img {
+        object-position: 62% center;
+      }
+
+      .offering:nth-of-type(3) img {
+        object-position: 75% center;
+      }
+
+      .offering-info {
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: 2;
+        background-color: rgba(0, 0, 0, 0.8);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        height: 100%;
+        color: #fff;
+        padding: 6.9rem 2.8rem 3.7rem;
+        opacity: 0;
+        visibility: hidden;
+        pointer-events: none;
+        transition-property: visibility, opacity;
+        transition-duration: 0.2s;
+        transition-timing-function: ease-in-out;
+        text-align: center;
+      }
+
+      .offering.active {
+        height: 45rem;
+      }
+
+      .offering.inactive {
+        height: calc((100% - 45rem) / 2);
+      }
+
+      .offering.active .offering-info {
+        opacity: 1;
+        visibility: visible;
+        pointer-events: initial;
+      }
+
+      .offering-info > p:first-of-type {
+        text-transform: capitalize;
+        font-size: 2.4rem;
+        font-weight: 600;
+        margin-bottom: 2.4rem;
+      }
+
+      .offering-info > p:nth-of-type(2) {
+        font-size: 1.6rem;
+        font-weight: 400;
+        margin-bottom: 4rem;
+        font-size: 2rem;
+      }
+
+      .offering-info > .redirecting {
+        border: none;
+        width: fit-content;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #ffc0c2;
+        font-weight: 600;
+        gap: 1rem;
+      }
+
+      .offering-info > .redirecting > img {
+        width: 1.6rem;
+        height: 1.6rem;
+      }
+
+      .offering-info > .cancel {
+        border: none;
+        width: fit-content;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 600;
+        cursor: pointer;
+      }
+
+      .offering-info > .cancel > svg {
+        margin-right: 7px;
+      }
+
+      .offering-info > button,
+      .offering-info > a {
+        display: none;
+        font: inherit;
+        cursor: pointer;
+        padding: 0.8rem 6px;
+        width: min(30.8rem, 100%);
+        font-size: 1.6rem;
+        font-weight: 600;
+        border: 1px solid #fff;
+        border-radius: 6px;
+        color: #fff;
+        background-color: transparent;
+      }
+
+      @media only screen and (max-width: 20em) {
+        html {
+          font-size: 50%;
+        }
+      }
+
+      @media only screen and (max-width: 50em) and (max-height: 40em) {
+        .offerings-group {
+          min-height: 150vh;
+          height: 150vh;
+        }
+
+        .offering {
+          flex-shrink: 0;
+        }
+
+        .offering.active {
+          height: 100vh;
+        }
+
+        .offering.inactive {
+          height: 25rem;
+        }
+      }
+
+      @media only screen and (max-width: 50em) and (max-height: 25em) {
+        .offering.active {
+          height: 150vh;
+        }
+      }
+
+      @media only screen and (min-width: 50em) {
+        header {
+          display: block;
+          position: fixed;
+          top: 0;
+          left: 0;
+          height: 8.8rem;
+          background-color: rgba(255, 255, 255, 0.3);
+          padding: 2.4rem 16.1rem;
+        }
+
+        header img {
+          width: 17.3rem;
+          height: 4rem;
+        }
+
+        .instruction {
+          display: none;
+        }
+
+        .offerings-group {
+          height: 100vh;
+          flex-direction: row;
+          position: fixed;
+          top: 0;
+          left: 0;
+        }
+
+        .offering {
+          flex-basis: calc(100vw / 3);
+          height: 100%;
+        }
+
+        .offering > div:first-child > p {
+          bottom: 20rem;
+          font-size: 3.2rem;
+        }
+
+        .offering-info {
+          padding: 4.9rem;
+        }
+
+        .offering:hover .offering-info {
+          opacity: 1;
+          visibility: visible;
+          pointer-events: initial;
+        }
+
+        .offering-info > p:nth-of-type(1) {
+          font-size: 4rem;
+        }
+
+        .offering-info > p:nth-of-type(2) {
+          font-size: 2rem;
+        }
+
+        .offering-info > button,
+        .offering-info > a {
+          display: block;
+        }
+
+        .offering-info > .redirecting,
+        .offering-info > .cancel {
+          display: none;
+        }
+      }
+    </style>
+
+    <header>
+      <picture>
+        <source srcset="/images/logo-white.svg" media="(min-width: 50em)" />
+        <img src="/images/logo.svg" alt="whatadeal" />
+      </picture>
+    </header>
+
+    <div class="instruction">
+      <svg
+        width="39"
+        height="50"
+        viewBox="0 0 39 50"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M13.6111 11.1111C13.6111 10.3744 13.9038 9.66786 14.4247 9.14692C14.9456 8.62599 15.6522 8.33333 16.3889 8.33333C17.1256 8.33333 17.8321 8.62599 18.3531 9.14692C18.874 9.66786 19.1667 10.3744 19.1667 11.1111V23.5278L22.5278 23.8889L36.25 29.9722C37.7222 30.6389 38.6111 32.1111 38.6111 33.7222V45.8333C38.5278 48.1111 36.7222 49.9167 34.4444 50H16.3889C15.3333 50 14.3333 49.5833 13.6111 48.8055L0 37.1389L2.05556 35C2.58333 34.4167 3.33333 34.1111 4.11111 34.1111H4.72222L13.6111 38.8889V11.1111ZM16.3889 0C19.3357 0 22.1619 1.17063 24.2456 3.25437C26.3294 5.3381 27.5 8.16426 27.5 11.1111C27.5 15.2778 25.2778 18.8056 21.9444 20.7222V17.3333C23.6389 15.8056 24.7222 13.5833 24.7222 11.1111C24.7222 8.90097 23.8442 6.78136 22.2814 5.21855C20.7186 3.65575 18.599 2.77778 16.3889 2.77778C14.1788 2.77778 12.0591 3.65575 10.4963 5.21855C8.93353 6.78136 8.05556 8.90097 8.05556 11.1111C8.05556 13.5833 9.13889 15.8056 10.8333 17.3333V20.7222C7.5 18.8056 5.27778 15.2778 5.27778 11.1111C5.27778 8.16426 6.44841 5.3381 8.53215 3.25437C10.6159 1.17063 13.442 0 16.3889 0Z"
+          fill="white"
+        />
+      </svg>
+
+      <p>Tap one to get started</p>
+    </div>
+
+    <main class="offerings-group">
+      <div class="offering" data-id="0">
+        <div class="offering-preview">
+          <div>
+            <img src="/images/deelaa-travels.jpeg" alt="whatadeal travels" />
+          </div>
+
+          <p>Travels</p>
+        </div>
+
+        <div class="offering-info">
+          <p>Whatadeal travels</p>
+
+          <p>
+            Love Travel? Simplify your experiences anywhere in the world, from
+            Visa applications, Hotel bookings, Airport Transfers, and access to
+            the best flight deals. Go somewhere new, leave the planning to us.
+          </p>
+
+          <div class="redirecting">
+            <img src="/images/loading.gif" alt="" />
+            <p>Redirecting</p>
+          </div>
+
+          <button class="cancel">
+            <svg
+              width="10"
+              height="10"
+              viewBox="0 0 10 10"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                fill-rule="evenodd"
+                clip-rule="evenodd"
+                d="M6.41401 5L9.70701 1.707C10.098 1.316 10.098 0.684 9.70701 0.293C9.31601 -0.0979999 8.68401 -0.0979999 8.29301 0.293L5.00001 3.586L1.70701 0.293C1.31601 -0.0979999 0.684006 -0.0979999 0.293006 0.293C-0.0979941 0.684 -0.0979941 1.316 0.293006 1.707L3.58601 5L0.293006 8.293C-0.0979941 8.684 -0.0979941 9.316 0.293006 9.707C0.488006 9.902 0.744006 10 1.00001 10C1.25601 10 1.51201 9.902 1.70701 9.707L5.00001 6.414L8.29301 9.707C8.48801 9.902 8.74401 10 9.00001 10C9.25601 10 9.51201 9.902 9.70701 9.707C10.098 9.316 10.098 8.684 9.70701 8.293L6.41401 5Z"
+                fill="white"
+              />
+            </svg>
+            <p>Cancel</p>
+          </button>
+
+          <a href="https://whatadeal.travel">Book a trip</a>
+        </div>
+      </div>
+
+      <div class="offering" data-id="1">
+        <div class="offering-preview">
+          <div>
+            <img src="/images/deelaa-lifestyle.jpeg" alt="whatadeal events" />
+          </div>
+
+          <p>Events & Entertainment</p>
+        </div>
+
+        <div class="offering-info">
+          <p>Whatadeal events</p>
+
+          <p>
+            Find events, book tickets, explore cool spots, and uncover fun
+            locations near you. Whether you're an adventurer, a foodie, a party
+            enthusiast, or a chill vibes seeker, we've got experiences tailored
+            just for you on Whatadeal Events!
+          </p>
+
+          <div class="redirecting">
+            <img src="/images/loading.gif" alt="" />
+            <p>Redirecting</p>
+          </div>
+
+          <button class="cancel">
+            <svg
+              width="10"
+              height="10"
+              viewBox="0 0 10 10"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                fill-rule="evenodd"
+                clip-rule="evenodd"
+                d="M6.41401 5L9.70701 1.707C10.098 1.316 10.098 0.684 9.70701 0.293C9.31601 -0.0979999 8.68401 -0.0979999 8.29301 0.293L5.00001 3.586L1.70701 0.293C1.31601 -0.0979999 0.684006 -0.0979999 0.293006 0.293C-0.0979941 0.684 -0.0979941 1.316 0.293006 1.707L3.58601 5L0.293006 8.293C-0.0979941 8.684 -0.0979941 9.316 0.293006 9.707C0.488006 9.902 0.744006 10 1.00001 10C1.25601 10 1.51201 9.902 1.70701 9.707L5.00001 6.414L8.29301 9.707C8.48801 9.902 8.74401 10 9.00001 10C9.25601 10 9.51201 9.902 9.70701 9.707C10.098 9.316 10.098 8.684 9.70701 8.293L6.41401 5Z"
+                fill="white"
+              />
+            </svg>
+            <p>Cancel</p>
+          </button>
+
+          <a href="https://whatadeal.events">Get Your Tickets</a>
+        </div>
+      </div>
+
+      <div class="offering" data-id="2">
+        <div class="offering-preview">
+          <div>
+            <img src="/images/deelaa-store.jpeg" alt="whatadeal store" />
+          </div>
+
+          <p>E-commerce</p>
+        </div>
+
+        <div class="offering-info">
+          <p>Whatadeal E-commerce</p>
+
+          <p>
+            Power your business with an all-in-one eCommerce platform built for
+            African entrepreneurs. Create your online store, manage inventory,
+            access affordable logistics, and grow with tools designed to help
+            you succeed.
+          </p>
+
+          <div class="redirecting">
+            <img src="/images/loading.gif" alt="" />
+            <p>Redirecting</p>
+          </div>
+
+          <button class="cancel">
+            <svg
+              width="10"
+              height="10"
+              viewBox="0 0 10 10"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                fill-rule="evenodd"
+                clip-rule="evenodd"
+                d="M6.41401 5L9.70701 1.707C10.098 1.316 10.098 0.684 9.70701 0.293C9.31601 -0.0979999 8.68401 -0.0979999 8.29301 0.293L5.00001 3.586L1.70701 0.293C1.31601 -0.0979999 0.684006 -0.0979999 0.293006 0.293C-0.0979941 0.684 -0.0979941 1.316 0.293006 1.707L3.58601 5L0.293006 8.293C-0.0979941 8.684 -0.0979941 9.316 0.293006 9.707C0.488006 9.902 0.744006 10 1.00001 10C1.25601 10 1.51201 9.902 1.70701 9.707L5.00001 6.414L8.29301 9.707C8.48801 9.902 8.74401 10 9.00001 10C9.25601 10 9.51201 9.902 9.70701 9.707C10.098 9.316 10.098 8.684 9.70701 8.293L6.41401 5Z"
+                fill="white"
+              />
+            </svg>
+            <p>Cancel</p>
+          </button>
+
+          <a href="https://whatadeal.shop">Launch Your Store Today</a>
+
+          <span style="padding-top: 16px; font-style: italic"
+            >Join Thousands of African Entrepreneurs&#8230;. It&apos;s Free to
+            start</span
+          >
+        </div>
+      </div>
+    </main>
+
+    <script>
+      const viewportGreaterThan800px = window.matchMedia("(max-width: 50em)");
+
+      const offerings = document.querySelectorAll(".offering");
+      const offeringPreviews = document.querySelectorAll(".offering-preview");
+      const cancels = document.querySelectorAll(".cancel");
+
+      let timeout = undefined;
+
+      function onOfferingClick(event) {
+        const el = event.currentTarget;
+
+        el.parentElement.classList.remove("active", "inactive");
+        el.parentElement.classList.add("active");
+
+        const id = el.parentElement.dataset.id;
+
+        let href = "";
+
+        switch (id) {
+          case "0":
+            href = "https://whatadeal.travel";
+            break;
+          case "1":
+            href = "https://whatadeal.events";
+            break;
+          case "2":
+            href = "https://whatadeal.shop";
+            break;
+        }
+
+        timeout = setTimeout(() => {
+          offerings.forEach((o) => {
+            o.classList.remove("active", "inactive");
+          });
+
+          window.location.href = href;
+        }, 3500);
+
+        const others = Array.from(offerings).filter(
+          (o) => o.dataset.id !== el.parentElement.dataset.id,
+        );
+
+        others.forEach((o) => {
+          o.classList.remove("active", "inactive");
+          o.classList.add("inactive");
+        });
+      }
+
+      function handleClose(element) {
+        element.parentElement.classList.remove("active");
+
+        if (timeout) {
+          clearTimeout(timeout);
+        }
+
+        const others = Array.from(offerings).filter(
+          (o) => o.dataset.id !== element.parentElement.dataset.id,
+        );
+
+        others.forEach((o) => {
+          o.classList.remove("active", "inactive");
+        });
+      }
+
+      function load(shouldAttach) {
+        offeringPreviews.forEach((el) => {
+          if (shouldAttach) {
+            el.addEventListener("click", onOfferingClick);
+          } else {
+            el.removeEventListener("click", onOfferingClick);
+
+            el.classList.remove("active", "inactive");
+          }
+        });
+
+        cancels.forEach((el) => {
+          if (shouldAttach) {
+            el.addEventListener("click", function () {
+              handleClose(el);
+            });
+          } else {
+            el.removeEventListener("click", function () {
+              handleClose(el);
+            });
+          }
+        });
+      }
+
+      viewportGreaterThan800px.onchange = function (event) {
+        load(event.matches);
+      };
+
+      load(viewportGreaterThan800px.matches);
+    </script>
+  </body>
+</html>
